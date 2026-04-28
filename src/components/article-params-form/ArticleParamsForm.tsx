@@ -37,11 +37,11 @@ export const ArticleParamsForm = ({
 	setArticleState,
 }: ArticleParamsFormProps) => {
 	const [formState, setFormState] = useState<ArticleStateType>(articleState);
-	const [isOpen, setIsOpen] = useState(false);
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const sidebarRef = useRef<HTMLDivElement>(null);
 
 	const handleToggleSidebar = () => {
-		setIsOpen((currentIsOpen) => !currentIsOpen);
+		setIsSidebarOpen((currentIsSidebarOpen) => !currentIsSidebarOpen);
 	};
 
 	const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -57,11 +57,11 @@ export const ArticleParamsForm = ({
 	useEffect(() => {
 		const handleClickOutside = (evt: MouseEvent) => {
 			if (
-				isOpen &&
+				isSidebarOpen &&
 				sidebarRef.current &&
 				!sidebarRef.current.contains(evt.target as Node)
 			) {
-				setIsOpen(false);
+				setIsSidebarOpen(false);
 			}
 		};
 
@@ -70,15 +70,15 @@ export const ArticleParamsForm = ({
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [isOpen]);
+	}, [isSidebarOpen]);
 
 	return (
 		<div ref={sidebarRef}>
-			<ArrowButton isOpen={isOpen} onClick={handleToggleSidebar} />
+			<ArrowButton isOpen={isSidebarOpen} onClick={handleToggleSidebar} />
 
 			<aside
 				className={clsx(styles.container, {
-					[styles.container_open]: isOpen,
+					[styles.container_open]: isSidebarOpen,
 				})}>
 				<form
 					className={styles.form}
